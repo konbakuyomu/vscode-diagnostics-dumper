@@ -3,20 +3,20 @@
   "displayName": "VS Code 诊断信息导出器",
   "description": "实时监控和导出VS Code编辑器中的代码诊断信息到JSON文件",
   "version": "1.0.0",
-  "publisher": "your-publisher-name",
+  "publisher": "konbakuyomu",
   "author": {
-    "name": "Your Name",
-    "email": "your-email@example.com"
+    "name": "konbakuyomu",
+    "email": "konbakuyomu@gmail.com"
   },
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/your-username/vscode-diagnostics-dumper.git"
+    "url": "https://github.com/konbakuyomu/vscode-diagnostics-dumper.git"
   },
   "bugs": {
-    "url": "https://github.com/your-username/vscode-diagnostics-dumper/issues"
+    "url": "https://github.com/konbakuyomu/vscode-diagnostics-dumper/issues"
   },
-  "homepage": "https://github.com/your-username/vscode-diagnostics-dumper#readme",
+  "homepage": "https://github.com/konbakuyomu/vscode-diagnostics-dumper#readme",
   "keywords": [
     "diagnostics",
     "error",
