@@ -1,8 +1,32 @@
 {
   "name": "vscode-diagnostics-dumper",
-  "displayName": "vscode-diagnostics-dumper",
-  "description": "Automatically save the text output from the problem area",
-  "version": "0.0.1",
+  "displayName": "VS Code 诊断信息导出器",
+  "description": "实时监控和导出VS Code编辑器中的代码诊断信息到JSON文件",
+  "version": "1.0.0",
+  "publisher": "your-publisher-name",
+  "author": {
+    "name": "Your Name",
+    "email": "your-email@example.com"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-username/vscode-diagnostics-dumper.git"
+  },
+  "bugs": {
+    "url": "https://github.com/your-username/vscode-diagnostics-dumper/issues"
+  },
+  "homepage": "https://github.com/your-username/vscode-diagnostics-dumper#readme",
+  "keywords": [
+    "diagnostics",
+    "error",
+    "warning",
+    "export",
+    "json",
+    "监控",
+    "诊断",
+    "导出"
+  ],
   "engines": {
     "vscode": "^1.102.0"
   },
