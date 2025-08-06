@@ -8,6 +8,11 @@
     "name": "konbakuyomu",
     "email": "konbakuyomu@gmail.com"
   },
+  "icon": "images/icon.jpg",
+  "galleryBanner": {
+    "color": "#2C5F5D",
+    "theme": "dark"
+  },
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -23,6 +28,9 @@
     "warning",
     "export",
     "json",
+    "linter",
+    "code-quality",
+    "analysis",
     "监控",
     "诊断",
     "导出"
@@ -31,7 +39,7 @@
     "vscode": "^1.102.0"
   },
   "categories": [
-    "Other"
+    "Linters"
   ],
   "activationEvents": [
     "*"
