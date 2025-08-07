@@ -30,6 +30,21 @@ function getOutputDir(): string {
 const seenFiles = new Set<string>();
 
 /* --------------------------------------------------------
+ * 清空诊断文件：确保每次启动时都是干净状态
+ * ------------------------------------------------------ */
+function clearDiagnosticsFile() {
+  const outDir = getOutputDir();
+  if (!fs.existsSync(outDir)) {
+    fs.mkdirSync(outDir, { recursive: true });
+  }
+  const outPath = path.join(outDir, 'vscode-diagnostics.json');
+  
+  // 写入空数组，确保文件存在且为干净状态
+  fs.writeFileSync(outPath, JSON.stringify([], null, 2), 'utf8');
+  console.log(`diagnostics-dumper ⟶ 清空诊断文件 ${outPath}`);
+}
+
+/* --------------------------------------------------------
  * 真正执行写文件的函数
  * ------------------------------------------------------ */
 function dumpAllDiagnostics() {
@@ -88,18 +103,20 @@ function scheduleDump() {
 export function activate(context: vscode.ExtensionContext) {
   console.log('🔥 vscode-diagnostics-dumper activated');
 
+  /* ---- 启动时清空诊断文件，确保干净状态 ---- */
+  clearDiagnosticsFile();
+
   /* ---- 监听：诊断变化 ---- */
   context.subscriptions.push(
     vscode.languages.onDidChangeDiagnostics(scheduleDump)
   );
-
 
   /* ---- 手动命令：Diagnostics Dumper: Dump Now ---- */
   context.subscriptions.push(
     vscode.commands.registerCommand('diagnosticsDumper.dumpNow', dumpAllDiagnostics)
   );
 
-  /* ---- 激活后先写一次 ---- */
+  /* ---- 激活后再写一次当前诊断 ---- */
   dumpAllDiagnostics();
 }
 
