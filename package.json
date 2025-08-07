@@ -48,7 +48,39 @@
   "contributes": {
     "configuration": {
       "title": "Diagnostics Dumper",
-      "properties": {}
+      "properties": {
+        "diagnosticsDumper.excludePatterns": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [
+            "*.md",
+            "*.txt",
+            "*.json",
+            "*.yml",
+            "*.yaml",
+            "*.xml",
+            "*.svg",
+            "*.png",
+            "*.jpg",
+            "*.jpeg",
+            "*.gif",
+            "*.ico",
+            "*.woff",
+            "*.woff2",
+            "*.ttf",
+            "*.eot",
+            "*.log",
+            "*.lock",
+            "package-lock.json",
+            "yarn.lock",
+            "node_modules/**/*"
+          ],
+          "description": "文件过滤模式列表，支持通配符匹配。例如：*.md (屏蔽所有markdown文件)，AAA.py (屏蔽特定文件)，docs/**/* (屏蔽docs目录下所有文件)",
+          "markdownDescription": "文件过滤模式列表，支持通配符匹配。\n\n**示例:**\n- `*.md` - 屏蔽所有 Markdown 文件\n- `AAA.py` - 屏蔽特定文件\n- `docs/**/*` - 屏蔽 docs 目录下所有文件\n- `*.{png,jpg,gif}` - 屏蔽多种图片格式"
+        }
+      }
     },
     "commands": [
       {
@@ -66,14 +98,17 @@
     "test": "vscode-test"
   },
   "devDependencies": {
-    "@types/vscode": "^1.102.0",
     "@types/mocha": "^10.0.10",
     "@types/node": "20.x",
+    "@types/vscode": "^1.102.0",
     "@typescript-eslint/eslint-plugin": "^8.31.1",
     "@typescript-eslint/parser": "^8.31.1",
-    "eslint": "^9.25.1",
-    "typescript": "^5.8.3",
     "@vscode/test-cli": "^0.0.11",
-    "@vscode/test-electron": "^2.5.2"
+    "@vscode/test-electron": "^2.5.2",
+    "eslint": "^9.25.1",
+    "typescript": "^5.8.3"
+  },
+  "dependencies": {
+    "minimatch": "^10.0.3"
   }
 }
