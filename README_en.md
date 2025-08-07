@@ -141,7 +141,7 @@ No major known issues at the moment. If you encounter problems, please submit an
 
 ## 📝 Changelog
 
-### 1.0.1 (Current Version)
+### 1.0.2 (Current Version)
 
 - ✨ **New**: File filtering functionality with wildcard pattern matching support
 - ✨ **New**: Automatic diagnostic file cleanup on startup to resolve residual issues

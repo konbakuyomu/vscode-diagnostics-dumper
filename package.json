@@ -2,7 +2,7 @@
   "name": "vscode-diagnostics-dumper",
   "displayName": "Diagnostics-Dumper",
   "description": "Real-time monitoring and exporting VS Code diagnostics information to JSON files",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "publisher": "konbakuyomu",
   "author": {
     "name": "konbakuyomu",
@@ -31,9 +31,14 @@
     "linter",
     "code-quality",
     "analysis",
+    "filter",
+    "pattern",
+    "workspace",
+    "multi-window",
     "监控",
     "诊断",
-    "导出"
+    "导出",
+    "过滤"
   ],
   "engines": {
     "vscode": "^1.102.0"
@@ -77,8 +82,8 @@
             "yarn.lock",
             "node_modules/**/*"
           ],
-          "description": "文件过滤模式列表，支持通配符匹配。例如：*.md (屏蔽所有markdown文件)，AAA.py (屏蔽特定文件)，docs/**/* (屏蔽docs目录下所有文件)",
-          "markdownDescription": "文件过滤模式列表，支持通配符匹配。\n\n**示例:**\n- `*.md` - 屏蔽所有 Markdown 文件\n- `AAA.py` - 屏蔽特定文件\n- `docs/**/*` - 屏蔽 docs 目录下所有文件\n- `*.{png,jpg,gif}` - 屏蔽多种图片格式"
+          "description": "File filter pattern list, supports wildcard matching. Examples: *.md (exclude all markdown files), AAA.py (exclude specific file), docs/**/* (exclude all files in docs directory)",
+          "markdownDescription": "File filter pattern list, supports wildcard matching.\n\n**Examples:**\n- `*.md` - Exclude all Markdown files\n- `AAA.py` - Exclude specific file\n- `docs/**/*` - Exclude all files in docs directory\n- `*.{png,jpg,gif}` - Exclude multiple image formats"
         }
       }
     },
