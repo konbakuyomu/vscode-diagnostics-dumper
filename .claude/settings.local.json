@@ -10,7 +10,8 @@
       "Bash(rm:*)",
       "Bash(npm run compile:*)",
       "Bash(vsce package:*)",
-      "Bash(vsce verify-pat:*)"
+      "Bash(vsce verify-pat:*)",
+      "Bash(npm run lint)"
     ]
   },
   "enabledMcpjsonServers": [

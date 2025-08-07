@@ -4,17 +4,23 @@ import * as path from 'path';
 import * as os from 'os';
 
 /* --------------------------------------------------------
- * 可配置项：读取用户设置（diagnosticsDumper.outputDir）
+ * 输出目录策略：优先使用工作区根目录，多重回退机制
  * ------------------------------------------------------ */
 function getOutputDir(): string {
-  const cfg = vscode.workspace.getConfiguration('diagnosticsDumper');
-  const customDir = cfg.get<string>('outputDir')?.trim();
+  // ① 工作区根目录（最高优先级）
+  const workspaceFolders = vscode.workspace.workspaceFolders;
+  if (workspaceFolders && workspaceFolders.length > 0) {
+    return workspaceFolders[0].uri.fsPath;
+  }
 
-  // ① 用户手动设置了目录 → 优先使用
-  if (customDir) return customDir;
+  // ② 当前活动文件的目录
+  const activeEditor = vscode.window.activeTextEditor;
+  if (activeEditor && activeEditor.document.uri.scheme === 'file') {
+    return path.dirname(activeEditor.document.uri.fsPath);
+  }
 
-  // ② 否则默认写到“桌面\vscode-diagnostics-dumper”
-  return path.join(os.homedir(), 'Desktop', 'vscode-diagnostics-dumper');
+  // ③ 回退到临时目录
+  return os.tmpdir();
 }
 
 /* --------------------------------------------------------
@@ -28,7 +34,9 @@ const seenFiles = new Set<string>();
  * ------------------------------------------------------ */
 function dumpAllDiagnostics() {
   const outDir = getOutputDir();
-  if (!fs.existsSync(outDir)) fs.mkdirSync(outDir, { recursive: true });
+  if (!fs.existsSync(outDir)) {
+    fs.mkdirSync(outDir, { recursive: true });
+  }
   const outPath = path.join(outDir, 'vscode-diagnostics.json');
 
   /* ---------- 1. 收集当前所有诊断 ---------- */
@@ -85,14 +93,6 @@ export function activate(context: vscode.ExtensionContext) {
     vscode.languages.onDidChangeDiagnostics(scheduleDump)
   );
 
-  /* ---- 监听：用户修改了 outputDir 设置 → 立即重写 ---- */
-  context.subscriptions.push(
-    vscode.workspace.onDidChangeConfiguration(e => {
-      if (e.affectsConfiguration('diagnosticsDumper.outputDir')) {
-        scheduleDump(); // 路径变了也写一次
-      }
-    })
-  );
 
   /* ---- 手动命令：Diagnostics Dumper: Dump Now ---- */
   context.subscriptions.push(

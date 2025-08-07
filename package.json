@@ -48,13 +48,7 @@
   "contributes": {
     "configuration": {
       "title": "Diagnostics Dumper",
-      "properties": {
-        "diagnosticsDumper.outputDir": {
-          "type": "string",
-          "default": "",
-          "description": "Output directory for diagnostic JSON files; defaults to desktop if empty"
-        }
-      }
+      "properties": {}
     },
     "commands": [
       {
