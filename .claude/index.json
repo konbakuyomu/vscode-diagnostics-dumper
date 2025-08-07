@@ -1,0 +1,69 @@
+{
+  "generated_at": "2025-08-07T14:30:00+08:00",
+  "generator": "初始化架构师v1.0",
+  "project_type": "vscode-extension",
+  "language": "typescript",
+  "modules": [
+    {
+      "name": "主扩展模块",
+      "path": "src",
+      "type": "source",
+      "entry_files": ["src/extension.ts"],
+      "test_files": ["src/test/extension.test.ts"],
+      "coverage": "完整"
+    },
+    {
+      "name": "构建配置模块", 
+      "path": ".",
+      "type": "config",
+      "config_files": [
+        "package.json",
+        "tsconfig.json", 
+        "eslint.config.mjs"
+      ],
+      "coverage": "完整"
+    },
+    {
+      "name": "编译输出模块",
+      "path": "out",
+      "type": "build",
+      "output_files": ["out/extension.js", "out/extension.js.map"],
+      "coverage": "完整"
+    },
+    {
+      "name": "资源模块",
+      "path": "images",
+      "type": "assets", 
+      "files": ["images/icon.jpg"],
+      "coverage": "完整"
+    }
+  ],
+  "key_files": [
+    "src/extension.ts",
+    "package.json",
+    "tsconfig.json",
+    "eslint.config.mjs",
+    "README.md",
+    "README_en.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ],
+  "technologies": [
+    "TypeScript",
+    "VS Code Extension API",
+    "minimatch",
+    "ESLint",
+    "Mocha"
+  ],
+  "coverage_stats": {
+    "total_files_estimated": 15,
+    "scanned_files": 15,
+    "coverage_percentage": 100,
+    "ignored_directories": [
+      "node_modules",
+      ".git"
+    ]
+  },
+  "gaps": [],
+  "truncated": false
+}
