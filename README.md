@@ -1,3 +1,8 @@
+<!-- 语言选择 / Language Selection -->
+**[🇨🇳 中文](README.md)** | **[🇺🇸 English](README_en.md)**
+
+---
+
 # VS Code 诊断信息导出器 (Diagnostics Dumper)
 
 一个用于实时监控和导出VS Code编辑器中代码诊断信息的插件。该插件能够自动将错误、警告和其他诊断信息导出为JSON文件，便于外部工具进行分析和处理。

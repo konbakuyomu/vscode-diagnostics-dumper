@@ -5,7 +5,12 @@
       "mcp__context7__get-library-docs",
       "Bash(ls:*)",
       "Bash(git add:*)",
-      "WebFetch(domain:code.visualstudio.com)"
+      "WebFetch(domain:code.visualstudio.com)",
+      "Bash(git commit:*)",
+      "Bash(rm:*)",
+      "Bash(npm run compile:*)",
+      "Bash(vsce package:*)",
+      "Bash(vsce verify-pat:*)"
     ]
   },
   "enabledMcpjsonServers": [

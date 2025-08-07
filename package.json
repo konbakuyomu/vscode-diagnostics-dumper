@@ -1,8 +1,8 @@
 {
   "name": "vscode-diagnostics-dumper",
-  "displayName": "VS Code 诊断信息导出器",
-  "description": "实时监控和导出VS Code编辑器中的代码诊断信息到JSON文件",
-  "version": "1.0.0",
+  "displayName": "Diagnostics-Dumper",
+  "description": "Real-time monitoring and exporting VS Code diagnostics information to JSON files",
+  "version": "1.0.1",
   "publisher": "konbakuyomu",
   "author": {
     "name": "konbakuyomu",
@@ -52,7 +52,7 @@
         "diagnosticsDumper.outputDir": {
           "type": "string",
           "default": "",
-          "description": "诊断 JSON 的输出目录；留空时默认写到桌面"
+          "description": "Output directory for diagnostic JSON files; defaults to desktop if empty"
         }
       }
     },
