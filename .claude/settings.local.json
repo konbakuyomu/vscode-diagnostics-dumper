@@ -11,7 +11,9 @@
       "Bash(npm run compile:*)",
       "Bash(vsce package:*)",
       "Bash(vsce verify-pat:*)",
-      "Bash(npm run lint)"
+      "Bash(npm run lint)",
+      "Bash(mkdir:*)",
+      "mcp__firecrawl-mcp__firecrawl_scrape"
     ]
   },
   "enabledMcpjsonServers": [

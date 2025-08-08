@@ -2,7 +2,7 @@
   "name": "vscode-diagnostics-dumper",
   "displayName": "Diagnostics-Dumper",
   "description": "Real-time monitoring and exporting VS Code diagnostics information to JSON files",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "publisher": "konbakuyomu",
   "author": {
     "name": "konbakuyomu",
@@ -41,7 +41,7 @@
     "过滤"
   ],
   "engines": {
-    "vscode": "^1.102.0"
+    "vscode": "^1.69.0"
   },
   "categories": [
     "Linters"
@@ -105,7 +105,7 @@
   "devDependencies": {
     "@types/mocha": "^10.0.10",
     "@types/node": "20.x",
-    "@types/vscode": "^1.102.0",
+    "@types/vscode": "^1.69.0",
     "@typescript-eslint/eslint-plugin": "^8.31.1",
     "@typescript-eslint/parser": "^8.31.1",
     "@vscode/test-cli": "^0.0.11",

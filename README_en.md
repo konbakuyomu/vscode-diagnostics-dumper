@@ -216,8 +216,9 @@ No major known issues at the moment. If you encounter problems, please submit an
 
 ## 📝 Changelog
 
-### 1.0.2 (Current Version)
+### 1.0.3 (Current Version)
 
+- ✨ **New**: Cursor Editor compatibility, fully compatible with Cursor environment
 - ✨ **New**: File filtering functionality with wildcard pattern matching support
 - ✨ **New**: Automatic diagnostic file cleanup on startup to resolve residual issues
 - ♻️ **Refactor**: Output directory strategy with multi-window automatic isolation support
