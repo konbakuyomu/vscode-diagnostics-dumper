@@ -3,3 +3,8 @@ dist
 node_modules
 .vscode-test/
 *.vsix
+.claude
+.vscode
+vscode-diagnostics.json
+CLAUDE.md
+out/
