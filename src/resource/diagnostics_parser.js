@@ -45,6 +45,9 @@ const main = () => {
     const diagnostics = parseDiagnostics();
     const promptContent = prompt.replace(REPLACE_ENUM.diagnostics, JSON.stringify(diagnostics, null, 2));
     // outputJson("block", promptContent);
+    if (!promptContent) {
+        return;
+    }
     console.log(promptContent);
 }
 

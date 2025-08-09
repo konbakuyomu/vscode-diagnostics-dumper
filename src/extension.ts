@@ -185,6 +185,96 @@ function initializeHooks(context: vscode.ExtensionContext) {
 }
 
 /**
+ * 更新 settings.local.json 文件中的 UserPromptSubmit 钩子
+ * @param settings a
+ * @param newHook a
+ * @param settingsPath a
+ * @returns
+ */
+function updateUserPromptSubmitHook(settings: any, newHook: any, settingsPath: string) {
+  const hookName = newHook.name;
+  if (!settings.hooks) {
+    settings.hooks = {};
+  }
+  if (!Array.isArray(settings.hooks.UserPromptSubmit)) {
+    settings.hooks.UserPromptSubmit = [];
+  }
+
+  let hookExists = false;
+  for (const prompt of settings.hooks.UserPromptSubmit) {
+    if (prompt.hooks && Array.isArray(prompt.hooks)) {
+      if (prompt.hooks.some((h: any) => h.name === hookName)) {
+        hookExists = true;
+        break;
+      }
+    }
+  }
+
+  if (hookExists) {
+    console.log(`[Diagnostics Dumper] UserPromptSubmit 钩子 '${hookName}' 已存在于 ${settingsPath}。无需更改。`);
+    return false; // No changes made
+  }
+
+  // 添加钩子
+  if (settings.hooks.UserPromptSubmit.length === 0) {
+    settings.hooks.UserPromptSubmit.push({
+      hooks: [newHook],
+    });
+  } else {
+    if (!settings.hooks.UserPromptSubmit[0].hooks) {
+      settings.hooks.UserPromptSubmit[0].hooks = [];
+    }
+    settings.hooks.UserPromptSubmit[0].hooks.push(newHook);
+  }
+  console.log(`[Diagnostics Dumper] 已更新 ${settingsPath} 以添加 UserPromptSubmit 钩子 '${hookName}'。`);
+  return true; // Changes made
+}
+
+/**
+ * 更新 settings.local.json 文件中的 PostToolUse 钩子
+ * @param settings a
+ * @param newHook a
+ * @param settingsPath a
+ * @returns
+ */
+function updatePostToolUseHook(settings: any, newHook: any, settingsPath: string) {
+  const matcher = newHook.matcher;
+  const newInnerHook = newHook.hooks[0];
+  const hookName = newInnerHook.name;
+
+  if (!settings.hooks) {
+    settings.hooks = {};
+  }
+  if (!Array.isArray(settings.hooks.PostToolUse)) {
+    settings.hooks.PostToolUse = [];
+  }
+
+  const matcherEntry = settings.hooks.PostToolUse.find((h: any) => h.matcher === matcher);
+
+  if (matcherEntry) {
+    // Matcher entry exists, check for the specific hook by name
+    if (!matcherEntry.hooks) {
+      matcherEntry.hooks = [];
+    }
+    const hookExists = matcherEntry.hooks.some((h: any) => h.name === hookName);
+    if (hookExists) {
+      console.log(`[Diagnostics Dumper] PostToolUse 钩子 '${hookName}' (matcher: '${matcher}') 已存在于 ${settingsPath}。无需更改。`);
+      return false; // No changes made
+    } else {
+      // Add the hook to the existing matcher entry
+      matcherEntry.hooks.push(newInnerHook);
+      console.log(`[Diagnostics Dumper] 已更新 ${settingsPath}，在 PostToolUse (matcher: '${matcher}') 中添加钩子 '${hookName}'。`);
+      return true; // Changes made
+    }
+  } else {
+    // Matcher entry does not exist, add the whole new hook configuration
+    settings.hooks.PostToolUse.push(newHook);
+    console.log(`[Diagnostics Dumper] 已更新 ${settingsPath} 以添加 PostToolUse 钩子 (matcher: '${matcher}')。`);
+    return true; // Changes made
+  }
+}
+
+/**
  * 初始化 settings.local.json 文件中的钩子配置
  */
 function initializeSettingsLocal() {
@@ -196,12 +286,23 @@ function initializeSettingsLocal() {
 
   const settingsPath = path.join(claudeDir, 'settings.local.json');
   const hookName = 'diagnostics_parser';
-  const commandString = `node "%CLAUDE_PROJECT_DIR%\\.claude\\hooks\\diagnostics_parser.js" --debug`;
+  const commandString = `node "%CLAUDE_PROJECT_DIR%\\.claude\\hooks\\diagnostics_parser.js"`;
 
-  const newHook = {
+  const userPromptSubmitHook = {
     name: hookName,
     type: 'command',
     command: commandString,
+  };
+
+  const postToolUseHook = {
+    matcher: "Write|Edit|MultiEdit|Read|Grep|Glob",
+    hooks: [
+      {
+        name: hookName,
+        type: 'command',
+        command: commandString,
+      },
+    ],
   };
 
   if (!fs.existsSync(settingsPath)) {
@@ -210,13 +311,14 @@ function initializeSettingsLocal() {
       hooks: {
         UserPromptSubmit: [
           {
-            hooks: [newHook],
+            hooks: [userPromptSubmitHook],
           },
         ],
+        PostToolUse: [postToolUseHook],
       },
     };
     fs.writeFileSync(settingsPath, JSON.stringify(defaultConfig, null, 4), 'utf8');
-    console.log(`[Diagnostics Dumper] 已创建 ${settingsPath} 并添加 '${hookName}' 钩子。`);
+    console.log(`[Diagnostics Dumper] 已创建 ${settingsPath} 并添加了 UserPromptSubmit 和 PostToolUse 钩子。`);
     return;
   }
 
@@ -233,43 +335,12 @@ function initializeSettingsLocal() {
       settings = {};
     }
 
-    // 确保路径有效
-    if (!settings.hooks) {
-      settings.hooks = {};
-    }
-    if (!Array.isArray(settings.hooks.UserPromptSubmit)) {
-      settings.hooks.UserPromptSubmit = [];
-    }
+    const changed1 = updateUserPromptSubmitHook(settings, userPromptSubmitHook, settingsPath);
+    const changed2 = updatePostToolUseHook(settings, postToolUseHook, settingsPath);
 
-    let hookExists = false;
-    for (const prompt of settings.hooks.UserPromptSubmit) {
-      if (prompt.hooks && Array.isArray(prompt.hooks)) {
-        if (prompt.hooks.some((h: any) => h.name === hookName)) {
-          hookExists = true;
-          break;
-        }
-      }
+    if (changed1 || changed2) {
+      fs.writeFileSync(settingsPath, JSON.stringify(settings, null, 4), 'utf8');
     }
-
-    if (hookExists) {
-      console.log(`[Diagnostics Dumper] 钩子 '${hookName}' 已存在于 ${settingsPath}。无需更改。`);
-      return;
-    }
-
-    // 添加钩子
-    if (settings.hooks.UserPromptSubmit.length === 0) {
-      settings.hooks.UserPromptSubmit.push({
-        hooks: [newHook],
-      });
-    } else {
-      if (!settings.hooks.UserPromptSubmit[0].hooks) {
-        settings.hooks.UserPromptSubmit[0].hooks = [];
-      }
-      settings.hooks.UserPromptSubmit[0].hooks.push(newHook);
-    }
-
-    fs.writeFileSync(settingsPath, JSON.stringify(settings, null, 4), 'utf8');
-    console.log(`[Diagnostics Dumper] 已更新 ${settingsPath} 以添加 '${hookName}' 钩子。`);
 
   } catch (error) {
     console.error(`[Diagnostics Dumper] 更新 ${settingsPath} 失败:`, error);
