@@ -56,6 +56,15 @@
     "*"
   ],
   "main": "./out/extension.js",
+  "files": [
+    "out/**/*.js",
+    "out/**/*.js.map",
+    "src/resource/**/*",
+    "images/**/*",
+    "package.json",
+    "README.md",
+    "LICENSE"
+  ],
   "contributes": {
     "configuration": {
       "title": "Diagnostics Dumper",
