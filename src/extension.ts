@@ -25,12 +25,6 @@ function getOutputDir(): string {
 }
 
 /* --------------------------------------------------------
- * 维护一个“最近见过的文件集合”
- * 作用：即使该文件目前没有诊断，也写出 diagnostics: []
- * ------------------------------------------------------ */
-const seenFiles = new Set<string>();
-
-/* --------------------------------------------------------
  * 文件过滤逻辑：根据用户配置的模式匹配规则过滤文件
  * ------------------------------------------------------ */
 function shouldExcludeFile(filePath: string): boolean {
@@ -97,27 +91,18 @@ function dumpAllDiagnostics() {
 
   /* ---------- 1. 收集当前所有诊断 ---------- */
   const raw = vscode.languages.getDiagnostics(); // [Uri, Diagnostic[]][]
-  const diagMap = new Map<string, vscode.Diagnostic[]>();
-
-  for (const [uri, diags] of raw) {
-    const file = uri.fsPath;
-    
-    // 跳过被过滤的文件
-    if (shouldExcludeFile(file)) {
-      continue;
-    }
-    
-    diagMap.set(file, diags);
-    seenFiles.add(file);            // 记录到"见过"集合
-  }
 
   /* ---------- 2. 生成最终数组 ---------- */
-  const entries = Array.from(seenFiles)
-    .filter(file => !shouldExcludeFile(file)) // 再次过滤（防止之前添加的文件现在被配置过滤）
-    .map(file => {
-      const diags = diagMap.get(file) ?? []; // 若 Map 中没有 → 已无诊断
+  const entries = raw
+    .filter(([uri, diags]) => {
+      // 跳过被过滤的文件，且只保留有诊断信息的条目
+      return !shouldExcludeFile(uri.fsPath) && diags.length > 0;
+    })
+    .map(([uri, diags]) => {
+      const file = uri.fsPath;
       return {
         file,
+        relativePath: path.relative(outDir, file),
         diagnostics: diags.map(d => ({
           message:  d.message,
           severity: d.severity,                                // 数字 0-3
