@@ -3,15 +3,15 @@
   "displayName": "Diagnostics-Dumper",
   "description": "Real-time monitoring and exporting VS Code diagnostics information to JSON files",
   "version": "1.1.0",
-  "publisher": "zgccrui",
+  "publisher": "konbakuyomu",
   "author": {
     "name": "konbakuyomu",
     "email": "konbakuyomu@gmail.com"
   },
   "contributors": [
     {
-      "name": "zgccrui",
-      "email": "zgccrui@outlook.com"
+      "name": "konbakuyomu",
+      "email": "konbakuyomu@gmail.com"
     }
   ],
   "icon": "images/icon.jpg",
@@ -22,12 +22,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/cr-zhichen/vscode-diagnostics-dumper.git"
+    "url": "https://github.com/konbakuyomu/vscode-diagnostics-dumper.git"
   },
   "bugs": {
-    "url": "https://github.com/cr-zhichen/vscode-diagnostics-dumper/issues"
+    "url": "https://github.com/konbakuyomu/vscode-diagnostics-dumper/issues"
   },
-  "homepage": "https://github.com/cr-zhichen/vscode-diagnostics-dumper#readme",
+  "homepage": "https://github.com/konbakuyomu/vscode-diagnostics-dumper#readme",
   "keywords": [
     "diagnostics",
     "error",
