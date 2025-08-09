@@ -89,8 +89,8 @@
     },
     "commands": [
       {
-        "command": "diagnosticsDumper.dumpNow",
-        "title": "Diagnostics Dumper: Dump Now"
+        "command": "diagnosticsDumper.initialize",
+        "title": "Diagnostics Dumper: Initialize (Claude Code 智能感知初始化)"
       }
     ]
   },
